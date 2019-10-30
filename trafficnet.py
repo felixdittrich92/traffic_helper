@@ -3,10 +3,12 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
 from keras.layers.normalization import BatchNormalization
 from keras.utils import to_categorical
-import warnings
 import keras
 import numpy as np
 import cv2
+import os
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # dont show warnings from Tensorflow
 
 testing_image_path = "data/test.p"
 training_image_path = "data/train.p"
@@ -30,8 +32,6 @@ print("Bilddimensionen:", np.shape(X_train[1]))
 print("Anzahl der Klassen:", len(np.unique(y_train)))
 
 n_classes = 43
-
-warnings.filterwarnings('ignore')
 
 model = Sequential()
 
