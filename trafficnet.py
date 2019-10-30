@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
 from keras.layers.normalization import BatchNormalization
 from keras.utils import to_categorical
+import warnings
 import keras
 import numpy as np
 import cv2
@@ -29,6 +30,8 @@ print("Bilddimensionen:", np.shape(X_train[1]))
 print("Anzahl der Klassen:", len(np.unique(y_train)))
 
 n_classes = 43
+
+warnings.filterwarnings('ignore')
 
 model = Sequential()
 
@@ -64,3 +67,5 @@ X_test_baseline = X_test.reshape(len(X_test), 32, 32, 3).astype('float32')
 y_test_baseline = keras.utils.to_categorical(y_test, n_classes)
 
 model.evaluate(X_test_baseline, y_test_baseline, verbose=0)
+
+model.save('traffic_signs_100epochs.h5')
