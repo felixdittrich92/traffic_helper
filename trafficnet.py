@@ -1,9 +1,9 @@
 import pickle
-from keras.models import Sequential
-from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
-from keras.layers.normalization import BatchNormalization
-from keras.utils import to_categorical
-import keras
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.utils import to_categorical
 import numpy as np
 import cv2
 import os
@@ -58,14 +58,14 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 X_train_baseline = X_train.reshape(len(X_train), 32, 32, 3).astype('float32')
 X_valid_baseline = X_valid.reshape(len(X_valid), 32, 32, 3).astype('float32')
-y_train_baseline = keras.utils.to_categorical(y_train, n_classes)
-y_valid_baseline = keras.utils.to_categorical(y_valid, n_classes)
+y_train_baseline = tf.keras.utils.to_categorical(y_train, n_classes)
+y_valid_baseline = tf.keras.utils.to_categorical(y_valid, n_classes)
 
-model.fit(X_train_baseline, y_train_baseline, batch_size=128, epochs=100, verbose=1, validation_data=(X_valid_baseline, y_valid_baseline))
+model.fit(X_train_baseline, y_train_baseline, batch_size=128, epochs=10, verbose=1, validation_data=(X_valid_baseline, y_valid_baseline))
 
 X_test_baseline = X_test.reshape(len(X_test), 32, 32, 3).astype('float32')
-y_test_baseline = keras.utils.to_categorical(y_test, n_classes)
+y_test_baseline = tf.keras.utils.to_categorical(y_test, n_classes)
 
 model.evaluate(X_test_baseline, y_test_baseline, verbose=0)
 
-model.save('traffic_signs_100epochs.h5')
+model.save('traffic_signs_100epochs.h5', save_format='h5')
