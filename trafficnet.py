@@ -5,7 +5,6 @@ from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropou
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.utils import to_categorical
 import numpy as np
-import cv2
 import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # dont show warnings from Tensorflow
