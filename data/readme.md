@@ -1,8 +1,7 @@
 Dataset from kaggle.com 
-https://www.kaggle.com/tomerel/traffic-signs-pickled-dataset
+https://www.kaggle.com/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign
 
 download the zipfile
 unzip
-and move the pickled files (train.p, test.p, valid.p) into data folder
+and move the files/folders into data folder
 
-NOW: pickle-files stored in git lfs
