@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 from skimage import transform
+from os import listdir
+from pathlib import Path
 
 classes = ['Tempo: 20', 'Tempo: 30', 'Tempo: 50', 'Tempo: 60', 'Tempo: 70',
             'Tempo: 80', 'Auflösung 80', 'Tempo: 100', 'Tempo: 120', 'Überholverbot',
@@ -23,23 +25,17 @@ def load_own_image(filepath):
     image = np.expand_dims(image, axis=0)
     return image
 
-image = load_own_image('./test_bilder/60_sign.jpg')
-predictions = model.predict(image)[0]
-pred_class = np.argmax(predictions)
-print(classes[pred_class])
-print(f"Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-
-image = load_own_image('./test_bilder/stop_sign.jpg')
-predictions = model.predict(image)[0]
-pred_class = np.argmax(predictions)
-print(classes[pred_class])
-print(f"Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-
-image = load_own_image('./test_bilder/vorfahrt.jpg')
-predictions = model.predict(image)[0]
-pred_class = np.argmax(predictions)
-print(classes[pred_class])
-print(f"Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+folder = './test_bilder/'
+for file in listdir(folder):
+    path = Path(folder, file)
+    print(path)
+    path = "./" + str(path)
+    image = load_own_image(path)
+    predictions = model.predict(image)[0]
+    pred_class = np.argmax(predictions)
+    class_name = classes[pred_class]
+    print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
 
 #ToDo: weitere Tests inkl. Video
+
 
