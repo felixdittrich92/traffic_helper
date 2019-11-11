@@ -14,8 +14,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 
-data=[]
-labels=[]
+data = []
+labels = []
 
 height = 30
 width = 30
@@ -27,7 +27,7 @@ n_inputs = height * width * channels # (30, 30, 3)
 for i in range(num_classes) :
     path = "./data/train/{0}/".format(i)
     print(path)
-    Class=os.listdir(path)
+    Class = os.listdir(path)
     for a in Class:
         try:
             image=cv2.imread(path+a)
@@ -38,14 +38,14 @@ for i in range(num_classes) :
         except AttributeError:
             print(" ")
             
-x_train=np.array(data)
-x_train= x_train/255.0
+x_train = np.array(data)
+x_train = x_train/255.0
 
-y_train=np.array(labels)
+y_train = np.array(labels)
 y_train = to_categorical(y_train, num_classes) # One Hot Encoding
 
 # Daten splitten
-X_train,X_valid,Y_train,Y_valid = train_test_split(x_train,y_train,test_size = 0.25,random_state=0)
+X_train,X_valid,Y_train,Y_valid = train_test_split(x_train,y_train,test_size = 0.3,random_state=0)
 print("Train :", X_train.shape)
 print("Valid :", X_valid.shape)
 
@@ -98,4 +98,6 @@ print(pred)
 print(accuracy_score(y_test, pred))
 
 # Modellgewichte speichern
-model.save('./data/traffic_signs_100_epochs.h5', save_format='h5')
+model.save('./data/traffic_signs_10_epochs.h5', save_format='h5')
+
+# ToDo: Modell überarbeiten
