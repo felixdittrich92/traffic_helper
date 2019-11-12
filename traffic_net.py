@@ -50,8 +50,10 @@ print("Train :", X_train.shape)
 print("Valid :", X_valid.shape)
 
 # CNN-Modell erstellen
+
 model = Sequential()
 
+"""
 model.add(Conv2D(32, kernel_size=(3,3), padding='same', activation='relu', input_shape=X_train.shape[1:]))
 model.add(Conv2D(32, kernel_size=(3,3), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -68,13 +70,34 @@ model.add(Dropout(rate=0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
 model.summary()
+"""
+
+model.add(Conv2D(64, (3, 3), input_shape=(30, 30, 3), padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid'))
+model.add(Dropout(0.2))
+
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid'))
+model.add(Dropout(0.2))
+
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid'))
+model.add(Dropout(0.2))
+    
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.2))
+
+model.add(Dense(num_classes, activation='softmax'))
+
+model.summary()
 
 # Modell kompilieren
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Modell trainieren 50 Epochen
-epochs = 50
-history = model.fit(X_train, Y_train, validation_data=(X_valid, Y_valid), batch_size=32, epochs=epochs,verbose=1)
+epochs = 20
+history = model.fit(X_train, Y_train, validation_data=(X_valid, Y_valid), batch_size=64, epochs=epochs,verbose=1)
 
 
 # Testdaten vorhersagen
@@ -98,6 +121,6 @@ print(pred)
 print(accuracy_score(y_test, pred))
 
 # Modellgewichte speichern
-model.save('./data/traffic_signs_10_epochs.h5', save_format='h5')
+model.save('./data/traffic_signs_20_epochs.h5', save_format='h5')
 
 # ToDo: Modell überarbeiten

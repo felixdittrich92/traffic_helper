@@ -28,9 +28,9 @@ def load_own_image(filepath):
 folder = './test_bilder/'
 for file in listdir(folder):
     path = Path(folder, file)
-    print(path)
     path = "./" + str(path)
     image = load_own_image(path)
+    print(path)
     predictions = model.predict(image)[0]
     pred_class = np.argmax(predictions)
     class_name = classes[pred_class]
