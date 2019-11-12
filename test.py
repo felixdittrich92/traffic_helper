@@ -30,12 +30,37 @@ for file in listdir(folder):
     path = Path(folder, file)
     path = "./" + str(path)
     image = load_own_image(path)
-    print(path)
+    #print(path)
     predictions = model.predict(image)[0]
     pred_class = np.argmax(predictions)
     class_name = classes[pred_class]
-    print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+    if predictions[pred_class] < 0.5:
+        print(f"Prediction Fail: {path}")
+    else:
+        print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
 
 #ToDo: weitere Tests inkl. Video
 
 
+""" Test
+while(True):
+    ret, frame = cap.read()
+
+    frame = transform.resize(frame, (30, 30))
+    frame = np.expand_dims(frame, axis=0)
+    predictions = model.predict(frame)[0]
+    pred_class = np.argmax(predictions)
+    class_name = classes[pred_class]
+
+    f predictions[pred_class] < 0.5:
+        pass
+    else:
+        print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+
+    cv2.imshow('frame',frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+"""
