@@ -17,8 +17,9 @@ classes = ['Tempo: 20', 'Tempo: 30', 'Tempo: 50', 'Tempo: 60', 'Tempo: 70',
             'Zwangspfeil Geradeaus und Links', 'Vorbeifahrt Rechts', 'Vorbeifahrt Links', 'Kreisverkehr', 'Auflösung Überholverbot',
             'Auflösung LKW Überholverbot']
 
-model = load_model('./data/traffic_signs_20_epochs.h5')
+model = load_model('./data/traffic_signs_50_epochs.h5')
 
+"""
 def load_own_image(filepath):
     image = cv2.imread(filepath)
     image = transform.resize(image, (30, 30))
@@ -30,7 +31,7 @@ for file in listdir(folder):
     path = Path(folder, file)
     path = "./" + str(path)
     image = load_own_image(path)
-    #print(path)
+    print(path)
     predictions = model.predict(image)[0]
     pred_class = np.argmax(predictions)
     class_name = classes[pred_class]
@@ -40,24 +41,29 @@ for file in listdir(folder):
         print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
 
 #ToDo: weitere Tests inkl. Video
+"""
+def load_frame(frame):
+    frame = transform.resize(frame, (30, 30))
+    frame = np.expand_dims(frame, axis=0)
+    return frame
 
-
-""" Test
 cap = cv2.VideoCapture(0)
 
 while(True):
     ret, frame = cap.read()
+    
+    copy = load_frame(frame)
 
-    frame = transform.resize(frame, (30, 30))
-    frame = np.expand_dims(frame, axis=0)
-    predictions = model.predict(frame)[0]
+    predictions = model.predict(copy)
     pred_class = np.argmax(predictions)
     class_name = classes[pred_class]
 
-    f predictions[pred_class] < 0.5:
+    """
+    if predictions[pred_class] < 0.5:
         pass
     else:
         print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+    """
 
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -65,4 +71,3 @@ while(True):
 
 cap.release()
 cv2.destroyAllWindows()
-"""
