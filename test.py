@@ -47,6 +47,7 @@ for file in listdir(folder):
 
 def load_frame(frame):
     frame = transform.resize(frame, (30, 30))
+    frame = np.array(frame)
     frame = np.expand_dims(frame, axis=0)
     return frame
 
@@ -54,26 +55,21 @@ cap = cv2.VideoCapture(0)
 index = 0
 
 while(True):
-    if index % 25 == 0:
+    if index % 500 == 0:
         print(index)
         ret, frame = cap.read()
 
-        #copy = load_frame(frame)
-        image = Image.fromarray(frame, 'RGB')
-        image = image.resize((30,30))
-        img_array = np.array(image)
-        img_array = np.expand_dims(img_array, axis=0).astype('float16')
+        image = load_frame(frame)
         predictions = model.predict(img_array)[0]
         pred_class = np.argmax(predictions)
         class_name = classes[pred_class]
+        if predictions[pred_class] < 0.5:
+            pass
+        else:
+            print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
         index += 1
     else:
-        print(':D')
-    
-    if predictions[pred_class] < 0.5:
-        pass
-    else:
-        print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+        index += 1
     
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
