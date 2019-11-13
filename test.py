@@ -55,12 +55,12 @@ cap = cv2.VideoCapture(0)
 index = 0
 
 while(True):
-    if index % 500 == 0:
+    if index % 200 == 0:
         print(index)
         ret, frame = cap.read()
 
         image = load_frame(frame)
-        predictions = model.predict(img_array)[0]
+        predictions = model.predict(image)[0]
         pred_class = np.argmax(predictions)
         class_name = classes[pred_class]
         if predictions[pred_class] < 0.5:
