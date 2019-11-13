@@ -1,9 +1,11 @@
 import cv2
 import numpy as np
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 from skimage import transform
 from os import listdir
 from pathlib import Path
+from PIL import Image
 
 classes = ['Tempo: 20', 'Tempo: 30', 'Tempo: 50', 'Tempo: 60', 'Tempo: 70',
             'Tempo: 80', 'Auflösung 80', 'Tempo: 100', 'Tempo: 120', 'Überholverbot',
@@ -51,19 +53,22 @@ cap = cv2.VideoCapture(0)
 
 while(True):
     ret, frame = cap.read()
-    
-    copy = load_frame(frame)
 
-    predictions = model.predict(copy)
+    #copy = load_frame(frame)
+    image = Image.fromarray(frame, 'RGB')
+    image = image.resize((30,30))
+    img_array = np.array(image)
+    img_array = np.expand_dims(img_array, axis=0).astype('float32')
+    predictions = model.predict(img_array)[0]
     pred_class = np.argmax(predictions)
     class_name = classes[pred_class]
 
-    """
+    
     if predictions[pred_class] < 0.5:
         pass
     else:
         print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-    """
+    
 
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
