@@ -44,32 +44,37 @@ for file in listdir(folder):
 
 #ToDo: weitere Tests inkl. Video
 """
+
 def load_frame(frame):
     frame = transform.resize(frame, (30, 30))
     frame = np.expand_dims(frame, axis=0)
     return frame
 
 cap = cv2.VideoCapture(0)
+index = 0
 
 while(True):
-    ret, frame = cap.read()
+    if index % 25 == 0:
+        print(index)
+        ret, frame = cap.read()
 
-    #copy = load_frame(frame)
-    image = Image.fromarray(frame, 'RGB')
-    image = image.resize((30,30))
-    img_array = np.array(image)
-    img_array = np.expand_dims(img_array, axis=0).astype('float32')
-    predictions = model.predict(img_array)[0]
-    pred_class = np.argmax(predictions)
-    class_name = classes[pred_class]
-
+        #copy = load_frame(frame)
+        image = Image.fromarray(frame, 'RGB')
+        image = image.resize((30,30))
+        img_array = np.array(image)
+        img_array = np.expand_dims(img_array, axis=0).astype('float16')
+        predictions = model.predict(img_array)[0]
+        pred_class = np.argmax(predictions)
+        class_name = classes[pred_class]
+        index += 1
+    else:
+        print(':D')
     
     if predictions[pred_class] < 0.5:
         pass
     else:
         print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
     
-
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
