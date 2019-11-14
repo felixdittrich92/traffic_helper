@@ -21,7 +21,7 @@ classes = ['Tempo: 20', 'Tempo: 30', 'Tempo: 50', 'Tempo: 60', 'Tempo: 70',
 
 model = load_model('./data/traffic_signs_20_epochs.h5')
 
-"""
+""" Image tests
 def load_own_image(filepath):
     image = cv2.imread(filepath)
     image = transform.resize(image, (30, 30))
@@ -42,7 +42,6 @@ for file in listdir(folder):
     else:
         print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
 
-#ToDo: weitere Tests inkl. Video
 """
 
 def load_frame(frame):
@@ -54,20 +53,37 @@ def load_frame(frame):
 cap = cv2.VideoCapture(0)
 index = 0
 
+
 while(True):
     if index % 200 == 0:
         print(index)
         ret, frame = cap.read()
 
-        image = load_frame(frame)
-        predictions = model.predict(image)[0]
-        pred_class = np.argmax(predictions)
-        class_name = classes[pred_class]
-        if predictions[pred_class] < 0.5:
-            pass
-        else:
-            print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-        index += 1
+        #split frame in grid
+        height = frame.shape[0]
+        width = frame.shape[1]
+
+        y1 = 0
+        M = height//3
+        N = width//3
+
+        for y in range(0,height,M):
+            for x in range(0, width, N):
+                y1 = y + M
+                x1 = x + N
+                tiles = frame[y:y+M,x:x+N]  
+
+                cv2.rectangle(frame, (x, y), (x1, y1), (0, 255, 0))
+                image = load_frame(tiles)
+                predictions = model.predict(image)[0]
+                pred_class = np.argmax(predictions)
+                class_name = classes[pred_class]
+                if predictions[pred_class] < 0.99:
+                    pass
+                else:
+                    print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+                    index += 1
+
     else:
         index += 1
     
