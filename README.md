@@ -3,4 +3,4 @@
 a short guide : 
 ToDo:
 - save and test current model (GPU) on video
-- (use Yolo for video sign detection) 
+- shape detection -> ROI -> Prediction
