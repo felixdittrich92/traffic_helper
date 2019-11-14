@@ -19,7 +19,7 @@ classes = ['Tempo: 20', 'Tempo: 30', 'Tempo: 50', 'Tempo: 60', 'Tempo: 70',
             'Zwangspfeil Geradeaus und Links', 'Vorbeifahrt Rechts', 'Vorbeifahrt Links', 'Kreisverkehr', 'Auflösung Überholverbot',
             'Auflösung LKW Überholverbot']
 
-model = load_model('./data/traffic_signs_50_epochs.h5')
+model = load_model('./data/traffic_signs_20_epochs.h5')
 
 """
 def load_own_image(filepath):

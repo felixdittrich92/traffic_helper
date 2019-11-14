@@ -53,25 +53,6 @@ print("Valid :", X_valid.shape)
 
 model = Sequential()
 
-"""
-model.add(Conv2D(32, kernel_size=(3,3), padding='same', activation='relu', input_shape=X_train.shape[1:]))
-model.add(Conv2D(32, kernel_size=(3,3), padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(rate=0.25))
-
-model.add(Conv2D(64, kernel_size=(3, 3), padding='same', activation='relu'))
-model.add(Conv2D(64, kernel_size=(3, 3), padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(rate=0.25))
-
-model.add(Flatten())
-model.add(Dense(256, activation='relu'))
-model.add(Dropout(rate=0.5))
-model.add(Dense(num_classes, activation='softmax'))
-
-model.summary()
-"""
-
 model.add(Conv2D(64, (3, 3), input_shape=(30, 30, 3), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid'))
 model.add(Dropout(0.2))
@@ -122,5 +103,3 @@ print(accuracy_score(y_test, pred))
 
 # Modellgewichte speichern
 model.save('./data/traffic_signs_20_epochs.h5', save_format='h5')
-
-# ToDo: Modell überarbeiten
