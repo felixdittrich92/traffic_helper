@@ -76,7 +76,7 @@ model.summary()
 # Modell kompilieren
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-# Modell trainieren 50 Epochen
+# Modell trainieren 20 Epochen
 epochs = 20
 history = model.fit(X_train, Y_train, validation_data=(X_valid, Y_valid), batch_size=64, epochs=epochs,verbose=1)
 
