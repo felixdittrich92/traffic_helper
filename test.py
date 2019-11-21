@@ -21,7 +21,7 @@ classes = ['Tempo: 20', 'Tempo: 30', 'Tempo: 50', 'Tempo: 60', 'Tempo: 70',
 
 model = load_model('./data/traffic_signs_20_epochs.h5')
 
-""" Image tests
+""" Image Test
 def load_own_image(filepath):
     image = cv2.imread(filepath)
     image = transform.resize(image, (30, 30))
@@ -41,7 +41,6 @@ for file in listdir(folder):
         print(f"Prediction Fail: {path}")
     else:
         print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-
 """
 
 def load_frame(frame):
@@ -56,10 +55,10 @@ index = 0
 
 while(True):
     if index % 200 == 0:
-        print(index)
         ret, frame = cap.read()
 
         #split frame in grid
+        """
         height = frame.shape[0]
         width = frame.shape[1]
 
@@ -74,15 +73,16 @@ while(True):
                 tiles = frame[y:y+M,x:x+N]  
 
                 cv2.rectangle(frame, (x, y), (x1, y1), (0, 255, 0))
-                image = load_frame(tiles)
-                predictions = model.predict(image)[0]
-                pred_class = np.argmax(predictions)
-                class_name = classes[pred_class]
-                if predictions[pred_class] < 0.99:
-                    pass
-                else:
-                    print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-                    index += 1
+                """
+        image = load_frame(frame)
+        predictions = model.predict(image)[0]
+        pred_class = np.argmax(predictions)
+        class_name = classes[pred_class]
+        if predictions[pred_class] < 0.99:
+            pass
+        else:
+            print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+            index += 1
 
     else:
         index += 1
