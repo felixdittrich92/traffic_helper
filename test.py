@@ -54,7 +54,8 @@ index = 0
 
 
 while(True):
-    if index % 200 == 0:
+    if (index % 60) == 0:
+
         ret, frame = cap.read()
 
         #split frame in grid
@@ -78,20 +79,13 @@ while(True):
         predictions = model.predict(image)[0]
         pred_class = np.argmax(predictions)
         class_name = classes[pred_class]
-        current = pred_class
-        if predictions[pred_class] < 0.99:
-            pass
+        
+        if predictions[pred_class] > 0.90:
+            print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
             index += 1
-        else:
-            if pred_class != current:
-                print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-                index += 1
-            else:
-                pass
-                index += 1
     else:
         index += 1
-    
+
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
