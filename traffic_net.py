@@ -53,22 +53,27 @@ print("Valid :", X_valid.shape)
 
 model = Sequential()
 
+# erster Conv-Layer
 model.add(Conv2D(64, (3, 3), input_shape=(30, 30, 3), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid'))
 model.add(Dropout(0.2))
 
+# zweiter Conv-Layer
 model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid'))
 model.add(Dropout(0.2))
 
+# dritter Conv-Layer
 model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid'))
 model.add(Dropout(0.2))
-    
+
+# fully connected Layer (FCL)
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.2))
 
+# fully connected Layer mit "output der 43 Klassen"
 model.add(Dense(num_classes, activation='softmax'))
 
 model.summary()
