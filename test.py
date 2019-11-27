@@ -51,6 +51,7 @@ def load_frame(frame):
 
 cap = cv2.VideoCapture(0)
 index = 0
+current = [0]
 
 
 while(True):
@@ -80,9 +81,13 @@ while(True):
         pred_class = np.argmax(predictions)
         class_name = classes[pred_class]
         
-        if predictions[pred_class] > 0.90:
-            print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
-            index += 1
+        if predictions[pred_class] > 0.85:
+            if current[-1] == pred_class:
+                pass
+            else:
+                current.append(pred_class)
+                print(f"Class Name: {class_name} Predicted Class: {pred_class} Accuracy: {predictions[pred_class]}")
+                index += 1
     else:
         index += 1
 
