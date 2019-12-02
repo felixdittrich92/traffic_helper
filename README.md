@@ -1,6 +1,8 @@
 # traffic_helper
 
-a short guide : 
-ToDo:
-- save and test current model (GPU) on video
-- shape detection -> ROI -> Prediction
+USE:
+
+1. cd into object_detection_API 
+2. python3 webcam_detection_TF.py
+
+
