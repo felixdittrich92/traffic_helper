@@ -15,23 +15,9 @@ from utils import ops as utils_ops
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-MODEL_NAME = 'ssd_mobilenet_v1_coco_2017_11_17'
-MODEL_FILE = MODEL_NAME + '.tar.gz'
-DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
+PATH_TO_LABELS = 'data/traffic_label.pbtxt'
+PATH_TO_FROZEN_GRAPH = 'data/traffic_graph.pb'
 
-# Path to frozen detection graph. This is the actual model that is used for the object detection.
-PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
-
-# List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
-
-opener = urllib.request.URLopener()
-opener.retrieve(DOWNLOAD_BASE + MODEL_FILE, MODEL_FILE)
-tar_file = tarfile.open(MODEL_FILE)
-for file in tar_file.getmembers():
-  file_name = os.path.basename(file.name)
-  if 'frozen_inference_graph.pb' in file_name:
-    tar_file.extract(file, os.getcwd())
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
@@ -108,7 +94,7 @@ try:
                         category_index,
                         instance_masks=output_dict.get('detection_masks'),
                         use_normalized_coordinates=True,
-                        line_thickness=8)
+                        line_thickness=2)
                     cv2.imshow('object_detection', cv2.resize(image_np, (800, 600)))
                     if cv2.waitKey(25) & 0xFF == ord('q'):
                         cap.release()
