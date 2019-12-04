@@ -15,7 +15,7 @@ from utils import ops as utils_ops
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-PATH_TO_LABELS = 'data/traffic_label.pbtxt'
+PATH_TO_LABELS = 'data/traffic_map.pbtxt'
 PATH_TO_FROZEN_GRAPH = 'data/traffic_graph.pb'
 
 
@@ -86,7 +86,7 @@ try:
                     # Actual detection.
                     output_dict = run_inference_for_single_image(image_np, detection_graph)
                     # Visualization of the results of a detection if the score is over 70%
-                    if output_dict['detection_scores'][0] > 0.9:
+                    if output_dict['detection_scores'][0] > 0.95:
                         vis_util.visualize_boxes_and_labels_on_image_array(
                             image_np,
                             output_dict['detection_boxes'],
