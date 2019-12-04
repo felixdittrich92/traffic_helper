@@ -85,16 +85,17 @@ try:
                     image_np_expanded = np.expand_dims(image_np, axis=0)
                     # Actual detection.
                     output_dict = run_inference_for_single_image(image_np, detection_graph)
-                    # Visualization of the results of a detection.
-                    vis_util.visualize_boxes_and_labels_on_image_array(
-                        image_np,
-                        output_dict['detection_boxes'],
-                        output_dict['detection_classes'],
-                        output_dict['detection_scores'],
-                        category_index,
-                        instance_masks=output_dict.get('detection_masks'),
-                        use_normalized_coordinates=True,
-                        line_thickness=2)
+                    # Visualization of the results of a detection if the score is over 70%
+                    if output_dict['detection_scores'][0] > 0.7:
+                        vis_util.visualize_boxes_and_labels_on_image_array(
+                            image_np,
+                            output_dict['detection_boxes'],
+                            output_dict['detection_classes'],
+                            output_dict['detection_scores'],
+                            category_index,
+                            instance_masks=output_dict.get('detection_masks'),
+                            use_normalized_coordinates=True,
+                            line_thickness=2)
                     cv2.imshow('object_detection', cv2.resize(image_np, (800, 600)))
                     if cv2.waitKey(25) & 0xFF == ord('q'):
                         cap.release()
