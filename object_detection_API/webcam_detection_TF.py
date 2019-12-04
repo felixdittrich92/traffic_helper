@@ -86,7 +86,7 @@ try:
                     # Actual detection.
                     output_dict = run_inference_for_single_image(image_np, detection_graph)
                     # Visualization of the results of a detection if the score is over 70%
-                    if output_dict['detection_scores'][0] > 0.7:
+                    if output_dict['detection_scores'][0] > 0.9:
                         vis_util.visualize_boxes_and_labels_on_image_array(
                             image_np,
                             output_dict['detection_boxes'],
