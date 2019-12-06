@@ -15,7 +15,7 @@ from utils import ops as utils_ops
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1" #disable GPU for Cuda only in Windows needed
+#os.environ["CUDA_VISIBLE_DEVICES"] = "-1" #disable GPU for Cuda only in Windows needed
 
 PATH_TO_LABELS = 'models/traffic_map.pbtxt'
 PATH_TO_FROZEN_GRAPH = 'models/traffic_graph.pb'
@@ -48,6 +48,8 @@ def run_inference_for_single_image(image, graph):
         tensor_dict['detection_masks'] = tf.expand_dims(
             detection_masks_reframed, 0)
     image_tensor = tf.get_default_graph().get_tensor_by_name('image_tensor:0')
+
+    print(image_tensor)
 
     # Run inference
     output_dict = sess.run(tensor_dict,
@@ -88,7 +90,7 @@ try:
                     # Actual detection.
                     output_dict = run_inference_for_single_image(image_np, detection_graph)
                     # Visualization of the results of a detection if first score biger 70%
-                    if output_dict['detection_scores'][0] > 0.40:
+                    if output_dict['detection_scores'][0] > 0.70:
                         vis_util.visualize_boxes_and_labels_on_image_array(
                             image_np,
                             output_dict['detection_boxes'],
