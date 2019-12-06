@@ -15,8 +15,10 @@ from utils import ops as utils_ops
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-PATH_TO_LABELS = 'data/traffic_map.pbtxt'
-PATH_TO_FROZEN_GRAPH = 'data/traffic_graph.pb'
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1" #disable GPU for Cuda only in Windows needed
+
+PATH_TO_LABELS = 'models/traffic_map.pbtxt'
+PATH_TO_FROZEN_GRAPH = 'models/traffic_graph.pb'
 
 
 detection_graph = tf.Graph()
@@ -86,7 +88,7 @@ try:
                     # Actual detection.
                     output_dict = run_inference_for_single_image(image_np, detection_graph)
                     # Visualization of the results of a detection if first score biger 70%
-                    if output_dict['detection_scores'][0] > 0.70:
+                    if output_dict['detection_scores'][0] > 0.40:
                         vis_util.visualize_boxes_and_labels_on_image_array(
                             image_np,
                             output_dict['detection_boxes'],
