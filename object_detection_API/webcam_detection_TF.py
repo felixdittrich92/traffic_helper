@@ -49,8 +49,6 @@ def run_inference_for_single_image(image, graph):
             detection_masks_reframed, 0)
     image_tensor = tf.get_default_graph().get_tensor_by_name('image_tensor:0')
 
-    print(image_tensor)
-
     # Run inference
     output_dict = sess.run(tensor_dict,
                             feed_dict={image_tensor: np.expand_dims(image, 0)})

@@ -1,9 +1,5 @@
+# Doesn´t work with TF2.0 :( !!
 import tensorflow as tf
-gf = tf.compat.v1.GraphDef()
-m_file = open('traffic_graph.pb','rb')
-for n in gf.node:
-    print( n.name )
-
 
 graph_def_file = "traffic_graph.pb"
 input_arrays = ["image_tensor"] 
